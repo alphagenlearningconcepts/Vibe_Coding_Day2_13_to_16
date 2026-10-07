@@ -174,7 +174,7 @@
 
         <!-- Question 2 -->
         <div class="bg-brand-purpleGhost p-4 rounded-2xl border-2 border-brand-purpleMid">
-          <p class="font-extrabold text-xs md:text-sm text-brand-black mb-2.5">2. Which tool or file acts as the main entry point for a static web app?</p>
+          <p class="font-extrabold text-xs md:text-sm text-brand-black mb-2.5">2. Which file acts as the main entry point for a web app?</p>
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-bold text-center">
             <button onclick="handleRecapAnswer(this, false)" class="recap-btn p-3 bg-white border border-brand-greyMid rounded-xl hover:border-brand-purple transition">
               main.js
@@ -316,8 +316,8 @@
     </section>
 
     <!-- SLIDE 5: Frontend vs Backend -->
-    <section class="slide flex-col items-center max-w-4xl w-full bg-white rounded-3xl p-6 md:p-8 shadow-xl border-4 border-brand-purplePale">
-      <div class="text-center mb-5">
+    <section class="slide flex-col items-center max-w-4xl w-full bg-white rounded-3xl p-5 md:p-7 shadow-xl border-4 border-brand-purplePale overflow-y-auto max-h-full">
+      <div class="text-center mb-4">
         <div class="inline-block bg-brand-purplePale text-brand-purple font-extrabold text-xs tracking-widest uppercase px-4 py-1 rounded-full mb-1">
           APP ARCHITECTURE
         </div>
@@ -325,49 +325,47 @@
           Frontend vs Backend
         </h2>
         <p class="text-xs md:text-sm text-brand-greyDark font-medium mt-1">
-          Understand how different parts of an app function together:
+          Like a restaurant: Frontend is the menu design, Backend is the kitchen!
         </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 w-full">
-        <!-- Frontend Card -->
-        <div class="bg-brand-purpleGhost border-3 border-brand-purpleMid p-6 rounded-3xl flex flex-col justify-between shadow-md">
-          <div>
-            <div class="flex items-center gap-3 mb-3">
-              <span class="text-3xl">🖥️</span>
-              <h3 class="text-lg md:text-xl font-extrabold text-brand-purple">Frontend</h3>
-            </div>
-            <div class="space-y-3 text-xs md:text-sm text-brand-black">
-              <p class="font-bold text-brand-purpleDark">What users see & touch on their screen!</p>
-              <ul class="space-y-2 font-medium text-brand-greyDark">
-                <li class="flex items-center gap-2">✨ Visual layouts, theme colors, and fonts</li>
-                <li class="flex items-center gap-2">🔘 Interactive buttons, cards, and forms</li>
-                <li class="flex items-center gap-2">🖼️ Images, banner sliders, and animations</li>
-                <li class="flex items-center gap-2">📱 Responsive design for phones & desktops</li>
-              </ul>
+      <div class="w-full space-y-4">
+        <!-- Frontend Row -->
+        <div class="bg-brand-purpleGhost border-2 border-brand-purpleMid p-4 rounded-2xl flex flex-col md:flex-row items-center gap-4">
+          <div class="w-full md:w-1/3 flex-shrink-0">
+            <div class="bg-white rounded-xl p-3 border-2 border-brand-purple shadow-sm text-center">
+              <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&auto=format&fit=crop&q=60" alt="Menu Card" class="w-full h-32 object-cover rounded-lg mb-2 shadow">
+              <span class="font-extrabold text-xs text-brand-purple">🍽️ Frontend (Menu Card)</span>
             </div>
           </div>
-          
+          <div class="w-full md:w-2/3 text-xs md:text-sm">
+            <h3 class="font-extrabold text-brand-purple text-base mb-1">Frontend: The Visual Design & Content</h3>
+            <p class="text-brand-greyDark font-medium mb-2">Just like a restaurant menu card that customers look at to see dish names, prices, and food description:</p>
+            <ul class="space-y-1 font-medium text-brand-greyDark">
+              <li>✨ Visual layouts, theme colors, and fonts</li>
+              <li>🔘 Interactive buttons, cards, and forms</li>
+              <li>🖼️ Images, banner sliders, and animations</li>
+            </ul>
+          </div>
         </div>
 
-        <!-- Backend Card -->
-        <div class="bg-brand-yellowPale border-3 border-brand-yellowDark p-6 rounded-3xl flex flex-col justify-between shadow-md">
-          <div>
-            <div class="flex items-center gap-3 mb-3">
-              <span class="text-3xl">⚙️</span>
-              <h3 class="text-lg md:text-xl font-extrabold text-brand-black">Backend</h3>
-            </div>
-            <div class="space-y-3 text-xs md:text-sm text-brand-black">
-              <p class="font-bold text-brand-yellowDark">What happens behind the scenes in the cloud!</p>
-              <ul class="space-y-2 font-medium text-brand-greyDark">
-                <li class="flex items-center gap-2">🗄️ Database storage for passwords & user profiles</li>
-                <li class="flex items-center gap-2">🔒 Account login authentication & security</li>
-                <li class="flex items-center gap-2">💳 Payment processing & server calculations</li>
-                <li class="flex items-center gap-2">📡 Sending and syncing live data across users</li>
-              </ul>
+        <!-- Backend Row -->
+        <div class="bg-brand-yellowPale border-2 border-brand-yellowDark p-4 rounded-2xl flex flex-col md:flex-row items-center gap-4">
+          <div class="w-full md:w-1/3 flex-shrink-0">
+            <div class="bg-white rounded-xl p-3 border-2 border-brand-yellowDark shadow-sm text-center">
+              <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=400&auto=format&fit=crop&q=60" alt="Kitchen Backend" class="w-full h-32 object-cover rounded-lg mb-2 shadow">
+              <span class="font-extrabold text-xs text-brand-black">⚙️ Backend (Kitchen)</span>
             </div>
           </div>
-          
+          <div class="w-full md:w-2/3 text-xs md:text-sm">
+            <h3 class="font-extrabold text-brand-black text-base mb-1">Backend: The Kitchen & Storage</h3>
+            <p class="text-brand-greyDark font-medium mb-2">Just like a restaurant kitchen where food gets cooked behind the scenes:</p>
+            <ul class="space-y-1 font-medium text-brand-greyDark">
+              <li>🗄️ Database storage for recipes, users, and orders</li>
+              <li>🔒 Account login authentication and security</li>
+              <li>📡 Sending and syncing live data across users</li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
@@ -418,8 +416,8 @@
     </section>
 
     <!-- SLIDE 7: Responsiveness & Essentials -->
-    <section class="slide flex-col items-center max-w-4xl w-full bg-white rounded-3xl p-6 md:p-8 shadow-xl border-4 border-brand-purplePale">
-      <div class="text-center mb-4">
+    <section class="slide flex-col items-center max-w-5xl w-full bg-white rounded-3xl p-5 md:p-7 shadow-xl border-4 border-brand-purplePale overflow-y-auto max-h-full">
+      <div class="text-center mb-3">
         <div class="inline-block bg-brand-yellow text-brand-black font-extrabold text-xs tracking-widest uppercase px-4 py-1 rounded-full mb-1">
           DESIGN ESSENTIALS
         </div>
@@ -427,47 +425,90 @@
           Responsiveness & Design Essentials
         </h2>
         <p class="text-xs md:text-sm text-brand-greyDark font-medium">
-          Key elements every professional static web app must possess:
+          Key visual standards for professional static apps:
         </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full mb-5 text-xs md:text-sm">
-        <div class="bg-brand-purpleGhost p-4 rounded-2xl border-2 border-brand-purpleMid flex items-start gap-3">
-          <span class="text-2xl">📱</span>
-          <div>
-            <h3 class="font-bold text-brand-purple text-sm mb-1">Mobile & Desktop Responsive</h3>
-            <p class="text-brand-greyDark font-medium">Layouts adapt fluidly across mobile screens, tablets, and desktop monitors.</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full text-xs">
+        <!-- 1. Responsiveness: Mobile, Tablet, Desktop -->
+        <div class="bg-brand-purpleGhost p-4 rounded-2xl border-2 border-brand-purpleMid flex flex-col justify-between">
+          <h3 class="font-bold text-brand-purple text-sm mb-2 text-center">📱 Multi-Device Responsiveness</h3>
+          <div class="flex justify-center items-end gap-3 my-2">
+            <!-- Mobile -->
+            <div class="w-12 h-20 bg-brand-purple text-white rounded-lg flex flex-col items-center justify-center p-1 shadow">
+              <span class="text-[10px]">📱</span>
+              <div class="w-8 h-10 bg-white rounded mt-1"></div>
+            </div>
+            <!-- Tablet -->
+            <div class="w-16 h-20 bg-brand-purpleMid text-white rounded-lg flex flex-col items-center justify-center p-1 shadow">
+              <span class="text-[10px]">📋 Tablet</span>
+              <div class="w-12 h-10 bg-white rounded mt-1"></div>
+            </div>
+            <!-- Computer -->
+            <div class="w-24 h-16 bg-brand-purpleDark text-white rounded-lg flex flex-col items-center justify-center p-1 shadow">
+              <span class="text-[10px]">💻 Desktop</span>
+              <div class="w-20 h-8 bg-white rounded mt-1"></div>
+            </div>
           </div>
+          <p class="text-[11px] text-brand-greyDark text-center font-medium">Same screen content adapting across all device sizes.</p>
         </div>
 
-        <div class="bg-brand-purpleGhost p-4 rounded-2xl border-2 border-brand-purpleMid flex items-start gap-3">
-          <span class="text-2xl">🎨</span>
-          <div>
-            <h3 class="font-bold text-brand-purple text-sm mb-1">Harmonious Color Palette</h3>
-            <p class="text-brand-greyDark font-medium">Use consistent primary, secondary, and background accent colors.</p>
+        <!-- 2. Image Placeholders with Icons & Arrows -->
+        <div class="bg-brand-purpleGhost p-4 rounded-2xl border-2 border-brand-purpleMid flex flex-col justify-between">
+          <h3 class="font-bold text-brand-purple text-sm mb-2 text-center">🖼️ Image Placeholders & Icons</h3>
+          <div class="flex items-center justify-center gap-3 my-2">
+            <!-- Small icons with arrows pointing towards app -->
+            <div class="flex flex-col space-y-1 text-xs">
+              <span class="bg-white px-2 py-0.5 rounded shadow border border-brand-purpleMid">⭐ ➔</span>
+              <span class="bg-white px-2 py-0.5 rounded shadow border border-brand-purpleMid">🖼️ ➔</span>
+            </div>
+            <!-- Screen placeholder without image -->
+            <div class="w-36 h-20 bg-white border-2 border-dashed border-brand-purple rounded-xl flex flex-col items-center justify-center text-brand-greyMid p-2 shadow-sm">
+              <span class="text-xs font-bold text-brand-purple">Screen Wireframe</span>
+              <span class="text-[9px]">[ Image Placeholder ]</span>
+            </div>
           </div>
+          <p class="text-[11px] text-brand-greyDark text-center font-medium">Placeholders help us add our content and images while development.</p>
         </div>
 
-        <div class="bg-brand-purpleGhost p-4 rounded-2xl border-2 border-brand-purpleMid flex items-start gap-3">
-          <span class="text-2xl">🖼️</span>
-          <div>
-            <h3 class="font-bold text-brand-purple text-sm mb-1">Image Placeholders</h3>
-            <p class="text-brand-greyDark font-medium">Utilize dynamic placehold.co images for clean visual prototypes.</p>
+        <!-- 3. Color Palette Consistency -->
+        <div class="bg-brand-purpleGhost p-4 rounded-2xl border-2 border-brand-purpleMid flex flex-col justify-between">
+          <h3 class="font-bold text-brand-purple text-sm mb-2 text-center">🎨 Color Palette Consistency</h3>
+          <div class="grid grid-cols-2 gap-2 my-2">
+            <!-- Orange & Lighter Orange Screen -->
+            <div class="bg-brand-yellowPale border-2 border-brand-yellowDark p-2 rounded-xl text-center shadow-sm">
+              <div class="bg-brand-yellow text-brand-black text-[10px] font-bold py-1 rounded mb-1">Orange Theme</div>
+              <div class="flex justify-center gap-1">
+                <span class="w-4 h-4 rounded-full bg-[#FFD071] inline-block"></span>
+                <span class="w-4 h-4 rounded-full bg-[#FFF3CC] inline-block border"></span>
+              </div>
+            </div>
+            <!-- Pink & Lighter Pink Screen -->
+            <div class="bg-brand-coralPale border-2 border-brand-coralDark p-2 rounded-xl text-center shadow-sm">
+              <div class="bg-brand-coral text-white text-[10px] font-bold py-1 rounded mb-1">Pink Theme</div>
+              <div class="flex justify-center gap-1">
+                <span class="w-4 h-4 rounded-full bg-[#ED5661] inline-block"></span>
+                <span class="w-4 h-4 rounded-full bg-[#FFF0F1] inline-block border"></span>
+              </div>
+            </div>
           </div>
+          <p class="text-[11px] text-brand-greyDark text-center font-medium">Color variants ensure consistent brand styling.</p>
         </div>
 
-        <div class="bg-brand-purpleGhost p-4 rounded-2xl border-2 border-brand-purpleMid flex items-start gap-3">
-          <span class="text-2xl">🔗</span>
-          <div>
-            <h3 class="font-bold text-brand-purple text-sm mb-1">Seamless Page Links</h3>
-            <p class="text-brand-greyDark font-medium">Working navigation bar linking all pages with consistent headers/footers.</p>
+        <!-- 4. Seamless Page Links -->
+        <div class="bg-brand-purpleGhost p-4 rounded-2xl border-2 border-brand-purpleMid flex flex-col justify-between">
+          <h3 class="font-bold text-brand-purple text-sm mb-2 text-center">🔗 Seamless Page Links</h3>
+          <div class="flex items-center justify-center gap-2 my-2 text-[11px] font-bold">
+            <span class="bg-white px-3 py-1.5 rounded-lg border border-brand-purple shadow text-brand-purple">index.html</span>
+            <span class="text-brand-purple">⇄</span>
+            <div class="flex flex-col gap-1">
+              <span class="bg-white px-2 py-0.5 rounded border border-brand-purpleMid shadow-sm text-[10px] text-brand-purple">page1.html</span>
+              <span class="bg-white px-2 py-0.5 rounded border border-brand-purpleMid shadow-sm text-[10px] text-brand-purple">page2.html</span>
+            </div>
           </div>
+          <p class="text-[11px] text-brand-greyDark text-center font-medium">Linked pages are needed to be mapped properly</p>
         </div>
       </div>
-
-      <a href="https://coolors.co/tailwind/352949" target="_blank" rel="noopener noreferrer" class="bg-brand-yellow hover:bg-brand-yellowDark text-brand-black font-extrabold px-6 py-3 rounded-2xl shadow-md transition transform hover:scale-105 flex items-center gap-2 text-xs md:text-sm">
-        <span>🎨 Explore Colour Palette Generator</span> ➔
-      </a>
     </section>
 
     <!-- SLIDE 8: Ideate Your Static App -->
