@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vibe Coding Day 2: Build Static Apps with AI</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Canvas Confetti CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <!-- Google Font: Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              purple: '#5E48C4',
+              purpleDark: '#4A3AAD',
+              purpleMid: '#7B6ED4',
+              purplePale: '#EAE7FE',
+              purpleGhost: '#F5F4FF',
+              yellow: '#FFD071',
+              yellowDark: '#E6B84A',
+              yellowPale: '#FFF3CC',
+              black: '#1A1A1A',
+              greyDark: '#404048',
+              greyMid: '#888896',
+              greyLight: '#F2F2F4',
+              cyan: '#59E4FB',
+              cyanDark: '#055F6E',
+              cyanPale: '#E0FAFE',
+              coral: '#ED5661',
+              coralDark: '#993040',
+              coralPale: '#FFF0F1',
+              green:'#AED581',
+            }
+          },
+          fontFamily: {
+            sans: ['Poppins', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #F5F4FF;
+      color: #1A1A1A;
+      user-select: none;
+    }
+
+    .slide {
+      display: none;
+      opacity: 0;
+      transform: translateY(16px) scale(0.98);
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .slide.active {
+      display: flex;
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F2F2F4;
+      border-radius: 8px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #7B6ED4;
+      border-radius: 8px;
+    }
+
+    @keyframes subtle-bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+    .animate-bounce-subtle {
+      animation: subtle-bounce 2s infinite ease-in-out;
+    }
+  </style>
+</head>
+<body class="h-screen w-screen flex flex-col justify-between overflow-hidden bg-brand-purpleGhost text-brand-black">
+
+  <!-- HEADER TOPBAR -->
+  <header class="bg-brand-purple text-white px-6 py-3.5 shadow-md flex justify-between items-center z-20">
+    <div class="flex items-center space-x-3">
+      <div class="bg-brand-yellow text-brand-black font-extrabold rounded-full px-3 py-1 text-xs md:text-sm tracking-wide shadow-sm">
+        ALPHAGEN LEARNING
+      </div>
+      <h1 class="text-lg md:text-xl font-bold tracking-tight text-white hidden sm:block">
+        Vibe Coding: Build Static Apps with AI
+      </h1>
+    </div>
+
+    <!-- Slide Jump Menu & Counter -->
+    <div class="flex items-center space-x-3">
+      <label for="slideSelect" class="text-xs md:text-sm font-semibold hidden md:inline text-brand-purplePale">Jump to:</label>
+      <select id="slideSelect" onchange="goToSlide(parseInt(this.value))" class="bg-white text-brand-purple font-bold text-sm md:text-base px-3 py-1 rounded-xl border-2 border-brand-yellow focus:outline-none shadow-sm cursor-pointer">
+        <option value="1">1. Welcome</option>
+        <option value="2">2. Day 1 Recap Quiz</option>
+        <option value="3">3. 5-Day Camp Agenda</option>
+        <option value="4">4. What is a Static App?</option>
+        <option value="5">5. Frontend vs Backend</option>
+        <option value="6">6. Multi-Page Architecture</option>
+        <option value="7">7. Responsiveness & Essentials</option>
+        <option value="8">8. Ideate Your Static App</option>
+        <option value="9">9. Draft Prompt Structure</option>
+        <option value="10">10. Wrap-up & Quiz</option>
+      </select>
+      <span id="slideCounter" class="text-xs md:text-sm font-bold bg-brand-purpleDark px-3 py-1.5 rounded-xl text-brand-yellow border border-brand-purpleMid">
+        1 / 10
+      </span>
+    </div>
+  </header>
+
+  <!-- MAIN SLIDE CONTAINER -->
+  <main class="flex-1 relative flex items-center justify-center p-4 md:p-6 overflow-hidden">
+
+    <!-- SLIDE 1: Welcome -->
+    <section class="slide active flex-col items-center justify-center text-center max-w-4xl w-full bg-white rounded-3xl p-8 md:p-14 shadow-xl border-4 border-brand-purplePale relative">
+      <div class="inline-block bg-brand-purplePale text-brand-purple font-extrabold text-xs md:text-sm tracking-widest uppercase px-5 py-2 rounded-full mb-8">
+        ALPHAGEN LEARNING
+      </div>
+      <h1 class="text-4xl md:text-6xl font-extrabold text-brand-black mb-10 leading-tight">
+        Vibe Coding: <br><span class="text-brand-purple">Build Static Apps with AI</span>
+      </h1>
+      <button onclick="nextSlide()" class="bg-brand-yellow hover:bg-brand-yellowDark text-brand-black text-xl md:text-2xl font-bold py-4 px-10 rounded-2xl shadow-lg transform hover:scale-105 transition-all flex items-center gap-3">
+        <span>Start Exploring</span> ➔
+      </button>
+    </section>
+
+    <!-- SLIDE 2: Day 1 Recap Quiz -->
+    <section class="slide flex-col items-center max-w-4xl w-full bg-white rounded-3xl p-5 md:p-7 shadow-xl border-4 border-brand-purplePale overflow-y-auto max-h-full">
+      <div class="text-center mb-4">
+        <div class="inline-block bg-brand-purplePale text-brand-purple font-extrabold text-xs tracking-widest uppercase px-4 py-1 rounded-full mb-1">
+          KNOWLEDGE CHECK
+        </div>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-brand-purple">
+          Let's test your day one memory
+        </h2>
+      </div>
+
+      <div class="w-full space-y-4 text-left">
+        <!-- Question 1 -->
+        <div class="bg-brand-purpleGhost p-4 rounded-2xl border-2 border-brand-purpleMid">
+          <p class="font-extrabold text-xs md:text-sm text-brand-black mb-2.5">1. What is vibe coding?</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
+            <button onclick="handleRecapAnswer(this, false)" class="recap-btn p-3 bg-white border border-brand-greyMid rounded-xl font-medium text-left hover:border-brand-purple transition">
+              Writing code manually line by line without using any AI assistance or automation.
+            </button>
+            <button onclick="handleRecapAnswer(this, true)" class="recap-btn p-3 bg-white border border-brand-greyMid rounded-xl font-medium text-left hover:border-brand-purple transition">
+              Combining core coding knowledge, art, and design with AI tools to build real apps fast.
+            </button>
+            <button onclick="handleRecapAnswer(this, false)" class="recap-btn p-3 bg-white border border-brand-greyMid rounded-xl font-medium text-left hover:border-brand-purple transition">
+              Copying code randomly from the internet without reviewing or testing.
+            </button>
+            <button onclick="handleRecapAnswer(this, false)" class="recap-btn p-3 bg-white border border-brand-greyMid rounded-xl font-medium text-left hover:border-brand-purple transition">
+              Using AI to generate code while completely avoiding learning how software works.
+            </button>
+          </div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="bg-brand-purpleGhost p-4 rounded-2xl border-2 border-brand-purpleMid">
+          <p class="font-extrabold text-xs md:text-sm text-brand-black mb-2.5">2. Which tool or file acts as the main entry point for a static web app?</p>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-bold text-center">
+            <button onclick="handleRecapAnswer(this, false)" class="recap-btn p-3 bg-white border border-brand-greyMid rounded-xl hover:border-brand-purple transition">
+              main.js
+            </button>
+            <button onclick="handleRecapAnswer(this, true)" class="recap-btn p-3 bg-white border border-brand-greyMid rounded-xl hover:border-brand-purple transition">
+              index.html
+            </button>
+            <button onclick="handleRecapAnswer(this, false)" class="recap-btn p-3 bg-white border border-brand-greyMid rounded-xl hover:border-brand-purple transition">
+              style.css
+            </button>
+            <button onclick="handleRecapAnswer(this, false)" class="recap-btn p-3 bg-white border border-brand-greyMid rounded-xl hover:border-brand-purple transition">
+              app.py
+            </button>
+          </div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="bg-brand-purpleGhost p-4 rounded-2xl border-2 border-brand-purpleMid">
+          <p class="font-extrabold text-xs md:text-sm text-brand-black mb-2.5">3. What are the core parts of an effective prompt?</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
+            <button onclick="handleRecapAnswer(this, false)" class="recap-btn p-3 bg-white border border-brand-greyMid rounded-xl font-medium text-left hover:border-brand-purple transition">
+              Only typing "Make me a cool website" in 3 words
+            </button>
+            <button onclick="handleRecapAnswer(this, false)" class="recap-btn p-3 bg-white border border-brand-greyMid rounded-xl font-medium text-left hover:border-brand-purple transition">
+              Copying and pasting the entire internet history
+            </button>
+            <button onclick="handleRecapAnswer(this, true)" class="recap-btn p-3 bg-white border border-brand-greyMid rounded-xl font-medium text-left hover:border-brand-purple transition">
+              Role / Persona, Project Goal, Tech Stack, UI Rules & Constraints
+            </button>
+            <button onclick="handleRecapAnswer(this, false)" class="recap-btn p-3 bg-white border border-brand-greyMid rounded-xl font-medium text-left hover:border-brand-purple transition">
+              Selecting random drop-down menus without writing text
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: 5-Day Camp Agenda -->
+    <section class="slide flex-col items-center max-w-5xl w-full bg-white rounded-3xl p-5 md:p-7 shadow-xl border-4 border-brand-purplePale">
+      <div class="text-center mb-4">
+        <div class="inline-block bg-brand-yellow text-brand-black font-extrabold text-xs tracking-widest uppercase px-4 py-1 rounded-full mb-1">
+          OUR ROADMAP
+        </div>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-brand-purple">
+          Agenda of the Camp
+        </h2>
+        <p class="text-xs md:text-sm text-brand-greyDark font-medium">
+          Here is our step-by-step path over 5 days:
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-5 gap-3 w-full my-auto">
+        <!-- Day 1 -->
+        <div class="bg-brand-green border-2 border-brand-purpleMid p-3 rounded-2xl text-center shadow-sm flex flex-col justify-between">
+          <div>
+            <span class="bg-brand-purple text-white font-extrabold text-[10px] px-2 py-0.5 rounded-full uppercase block mb-1">Day 1</span>
+            <h3 class="font-extrabold text-xs md:text-sm text-brand-purple mb-1">Introduction to Vibe Coding</h3>
+            <p class="text-[11px] text-brand-greyDark leading-tight">Get comfortable with vibe coding workflow & prompt engineering.</p>
+          </div>
+        </div>
+
+        <!-- Day 2 ACTIVE -->
+        <div class="bg-brand-yellowPale border-4 border-brand-yellowDark p-3 rounded-2xl text-center shadow-md flex flex-col justify-between transform scale-105">
+          <div>
+            <span class="bg-brand-yellow text-brand-black font-extrabold text-[10px] px-2 py-0.5 rounded-full uppercase block mb-1">Day 2 (Today)</span>
+            <h3 class="font-extrabold text-xs md:text-sm text-brand-black mb-1">Build Static App</h3>
+            <p class="text-[11px] text-brand-greyDark leading-tight">Multi-page app with navigation, brand identity, and asset creation.</p>
+          </div>
+        </div>
+
+        <!-- Day 3 -->
+        <div class="bg-brand-purpleGhost border-2 border-brand-purpleMid p-3 rounded-2xl text-center shadow-sm flex flex-col justify-between">
+          <div>
+            <span class="bg-brand-purple text-white font-extrabold text-[10px] px-2 py-0.5 rounded-full uppercase block mb-1">Day 3</span>
+            <h3 class="font-extrabold text-xs md:text-sm text-brand-purple mb-1">Build Dynamic App</h3>
+            <p class="text-[11px] text-brand-greyDark leading-tight">Connect Firebase database. Write and read live data across devices.</p>
+          </div>
+        </div>
+
+        <!-- Day 4 -->
+        <div class="bg-brand-purpleGhost border-2 border-brand-purpleMid p-3 rounded-2xl text-center shadow-sm flex flex-col justify-between">
+          <div>
+            <span class="bg-brand-purple text-white font-extrabold text-[10px] px-2 py-0.5 rounded-full uppercase block mb-1">Day 4</span>
+            <h3 class="font-extrabold text-xs md:text-sm text-brand-purple mb-1">GitHub & Repositories</h3>
+            <p class="text-[11px] text-brand-greyDark leading-tight">Learn version control, upload code, and publish live on Vercel/Netlify.</p>
+          </div>
+        </div>
+
+        <!-- Day 5 -->
+        <div class="bg-brand-purpleGhost border-2 border-brand-purpleMid p-3 rounded-2xl text-center shadow-sm flex flex-col justify-between">
+          <div>
+            <span class="bg-brand-purple text-white font-extrabold text-[10px] px-2 py-0.5 rounded-full uppercase block mb-1">Day 5</span>
+            <h3 class="font-extrabold text-xs md:text-sm text-brand-purple mb-1">Portfolio Showcase</h3>
+            <p class="text-[11px] text-brand-greyDark leading-tight">Build personal showcase portfolio and present your favorite app!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: What is a Static App? -->
+    <section class="slide flex-col items-center max-w-4xl w-full bg-white rounded-3xl p-6 md:p-8 shadow-xl border-4 border-brand-purplePale">
+      <div class="text-center mb-4">
+        <div class="inline-block bg-brand-cyanPale text-brand-cyanDark font-extrabold text-xs tracking-widest uppercase px-4 py-1 rounded-full mb-1">
+          CONCEPT EXPLORATION
+        </div>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-brand-purple">
+          What is a Static App?
+        </h2>
+      </div>
+
+      <div class="w-full bg-brand-purpleGhost border-2 border-brand-purpleMid p-5 rounded-2xl mb-6 text-center">
+        <p class="text-xs md:text-sm text-brand-black font-medium leading-relaxed">
+          A <strong>static web app</strong> is like a <strong>digital brochure or online portfolio</strong>. It displays fixed content—like text, pictures, and styled buttons—that looks the same to every visitor. It delivers information quickly without requiring a complex database or server logic behind the scenes!
+        </p>
+      </div>
+
+      <div class="w-full">
+        <h3 class="text-xs md:text-sm font-extrabold text-brand-purple mb-3 text-center uppercase tracking-wider">Common Examples of Static Web Apps:</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div class="bg-brand-yellowPale border-2 border-brand-yellowDark p-4 rounded-2xl text-center">
+            <div class="text-2xl mb-1">🎨</div>
+            <h4 class="font-bold text-xs md:text-sm text-brand-black">Portfolio Page</h4>
+            <p class="text-[11px] text-brand-greyDark font-medium mt-1">Showcases your projects, bio, skills, and contact links.</p>
+          </div>
+
+          <div class="bg-brand-cyanPale border-2 border-brand-cyanDark p-4 rounded-2xl text-center">
+            <div class="text-2xl mb-1">🚀</div>
+            <h4 class="font-bold text-xs md:text-sm text-brand-cyanDark">Product Landing Page</h4>
+            <p class="text-[11px] text-brand-greyDark font-medium mt-1">Presents feature highlights, pricing plans, and sign-up buttons.</p>
+          </div>
+
+          <div class="bg-brand-purplePale border-2 border-brand-purple p-4 rounded-2xl text-center">
+            <div class="text-2xl mb-1">🍕</div>
+            <h4 class="font-bold text-xs md:text-sm text-brand-purple">Restaurant Menu App</h4>
+            <p class="text-[11px] text-brand-greyDark font-medium mt-1">Displays food categories, prices, photos, and location hours.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: Frontend vs Backend -->
+    <section class="slide flex-col items-center max-w-4xl w-full bg-white rounded-3xl p-6 md:p-8 shadow-xl border-4 border-brand-purplePale">
+      <div class="text-center mb-5">
+        <div class="inline-block bg-brand-purplePale text-brand-purple font-extrabold text-xs tracking-widest uppercase px-4 py-1 rounded-full mb-1">
+          APP ARCHITECTURE
+        </div>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-brand-purple">
+          Frontend vs Backend
+        </h2>
+        <p class="text-xs md:text-sm text-brand-greyDark font-medium mt-1">
+          Understand how different parts of an app function together:
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 w-full">
+        <!-- Frontend Card -->
+        <div class="bg-brand-purpleGhost border-3 border-brand-purpleMid p-6 rounded-3xl flex flex-col justify-between shadow-md">
+          <div>
+            <div class="flex items-center gap-3 mb-3">
+              <span class="text-3xl">🖥️</span>
+              <h3 class="text-lg md:text-xl font-extrabold text-brand-purple">Frontend</h3>
+            </div>
+            <div class="space-y-3 text-xs md:text-sm text-brand-black">
+              <p class="font-bold text-brand-purpleDark">What users see & touch on their screen!</p>
+              <ul class="space-y-2 font-medium text-brand-greyDark">
+                <li class="flex items-center gap-2">✨ Visual layouts, theme colors, and fonts</li>
+                <li class="flex items-center gap-2">🔘 Interactive buttons, cards, and forms</li>
+                <li class="flex items-center gap-2">🖼️ Images, banner sliders, and animations</li>
+                <li class="flex items-center gap-2">📱 Responsive design for phones & desktops</li>
+              </ul>
+            </div>
+          </div>
+          
+        </div>
+
+        <!-- Backend Card -->
+        <div class="bg-brand-yellowPale border-3 border-brand-yellowDark p-6 rounded-3xl flex flex-col justify-between shadow-md">
+          <div>
+            <div class="flex items-center gap-3 mb-3">
+              <span class="text-3xl">⚙️</span>
+              <h3 class="text-lg md:text-xl font-extrabold text-brand-black">Backend</h3>
+            </div>
+            <div class="space-y-3 text-xs md:text-sm text-brand-black">
+              <p class="font-bold text-brand-yellowDark">What happens behind the scenes in the cloud!</p>
+              <ul class="space-y-2 font-medium text-brand-greyDark">
+                <li class="flex items-center gap-2">🗄️ Database storage for passwords & user profiles</li>
+                <li class="flex items-center gap-2">🔒 Account login authentication & security</li>
+                <li class="flex items-center gap-2">💳 Payment processing & server calculations</li>
+                <li class="flex items-center gap-2">📡 Sending and syncing live data across users</li>
+              </ul>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: Multi-Page Architecture -->
+    <section class="slide flex-col items-center max-w-4xl w-full bg-white rounded-3xl p-6 md:p-8 shadow-xl border-4 border-brand-purplePale">
+      <div class="text-center mb-4">
+        <div class="inline-block bg-brand-cyanPale text-brand-cyanDark font-extrabold text-xs tracking-widest uppercase px-4 py-1 rounded-full mb-1">
+          FILE STRUCTURE
+        </div>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-brand-purple">
+          Multi-Page Architecture
+        </h2>
+        <p class="text-xs md:text-sm text-brand-greyDark font-medium">
+          Click any file card below to inspect its role in building multi-page web apps:
+        </p>
+      </div>
+
+      <!-- File Cards Buttons -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 w-full mb-5">
+        <button onclick="inspectFileRole('index')" class="file-card-btn p-4 bg-brand-purpleGhost border-2 border-brand-purpleMid hover:border-brand-purple rounded-2xl text-center font-bold text-xs md:text-sm transition flex flex-col items-center justify-center gap-1 shadow-sm">
+          <span class="text-xl">🏠</span>
+          <span class="text-brand-purple">index.html</span>
+        </button>
+        <button onclick="inspectFileRole('about')" class="file-card-btn p-4 bg-brand-purpleGhost border-2 border-brand-purpleMid hover:border-brand-purple rounded-2xl text-center font-bold text-xs md:text-sm transition flex flex-col items-center justify-center gap-1 shadow-sm">
+          <span class="text-xl">📄</span>
+          <span class="text-brand-purple">pages.html</span>
+        </button>
+        <button onclick="inspectFileRole('css')" class="file-card-btn p-4 bg-brand-purpleGhost border-2 border-brand-purpleMid hover:border-brand-purple rounded-2xl text-center font-bold text-xs md:text-sm transition flex flex-col items-center justify-center gap-1 shadow-sm">
+          <span class="text-xl">🎨</span>
+          <span class="text-brand-purple">style.css</span>
+        </button>
+        <button onclick="inspectFileRole('js')" class="file-card-btn p-4 bg-brand-purpleGhost border-2 border-brand-purpleMid hover:border-brand-purple rounded-2xl text-center font-bold text-xs md:text-sm transition flex flex-col items-center justify-center gap-1 shadow-sm">
+          <span class="text-xl">⚡</span>
+          <span class="text-brand-purple">script.js</span>
+        </button>
+      </div>
+
+      <!-- Detail Modal Display Box -->
+      <div id="fileRoleDetailBox" class="w-full bg-brand-purpleGhost border-2 border-brand-purple p-5 rounded-2xl text-left transition-all">
+        <h3 id="fileRoleTitle" class="font-extrabold text-sm md:text-base text-brand-purple mb-1">
+          👆 Click a file above to inspect its purpose!
+        </h3>
+        <p id="fileRoleDesc" class="text-xs md:text-sm text-brand-greyDark font-medium leading-relaxed">
+         
+        </p>
+      </div>
+    </section>
+
+    <!-- SLIDE 7: Responsiveness & Essentials -->
+    <section class="slide flex-col items-center max-w-4xl w-full bg-white rounded-3xl p-6 md:p-8 shadow-xl border-4 border-brand-purplePale">
+      <div class="text-center mb-4">
+        <div class="inline-block bg-brand-yellow text-brand-black font-extrabold text-xs tracking-widest uppercase px-4 py-1 rounded-full mb-1">
+          DESIGN ESSENTIALS
+        </div>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-brand-purple">
+          Responsiveness & Design Essentials
+        </h2>
+        <p class="text-xs md:text-sm text-brand-greyDark font-medium">
+          Key elements every professional static web app must possess:
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full mb-5 text-xs md:text-sm">
+        <div class="bg-brand-purpleGhost p-4 rounded-2xl border-2 border-brand-purpleMid flex items-start gap-3">
+          <span class="text-2xl">📱</span>
+          <div>
+            <h3 class="font-bold text-brand-purple text-sm mb-1">Mobile & Desktop Responsive</h3>
+            <p class="text-brand-greyDark font-medium">Layouts adapt fluidly across mobile screens, tablets, and desktop monitors.</p>
+          </div>
+        </div>
+
+        <div class="bg-brand-purpleGhost p-4 rounded-2xl border-2 border-brand-purpleMid flex items-start gap-3">
+          <span class="text-2xl">🎨</span>
+          <div>
+            <h3 class="font-bold text-brand-purple text-sm mb-1">Harmonious Color Palette</h3>
+            <p class="text-brand-greyDark font-medium">Use consistent primary, secondary, and background accent colors.</p>
+          </div>
+        </div>
+
+        <div class="bg-brand-purpleGhost p-4 rounded-2xl border-2 border-brand-purpleMid flex items-start gap-3">
+          <span class="text-2xl">🖼️</span>
+          <div>
+            <h3 class="font-bold text-brand-purple text-sm mb-1">Image Placeholders</h3>
+            <p class="text-brand-greyDark font-medium">Utilize dynamic placehold.co images for clean visual prototypes.</p>
+          </div>
+        </div>
+
+        <div class="bg-brand-purpleGhost p-4 rounded-2xl border-2 border-brand-purpleMid flex items-start gap-3">
+          <span class="text-2xl">🔗</span>
+          <div>
+            <h3 class="font-bold text-brand-purple text-sm mb-1">Seamless Page Links</h3>
+            <p class="text-brand-greyDark font-medium">Working navigation bar linking all pages with consistent headers/footers.</p>
+          </div>
+        </div>
+      </div>
+
+      <a href="https://coolors.co/tailwind/352949" target="_blank" rel="noopener noreferrer" class="bg-brand-yellow hover:bg-brand-yellowDark text-brand-black font-extrabold px-6 py-3 rounded-2xl shadow-md transition transform hover:scale-105 flex items-center gap-2 text-xs md:text-sm">
+        <span>🎨 Explore Colour Palette Generator</span> ➔
+      </a>
+    </section>
+
+    <!-- SLIDE 8: Ideate Your Static App -->
+    <section class="slide flex-col items-center max-w-4xl w-full bg-white rounded-3xl p-5 md:p-7 shadow-xl border-4 border-brand-purplePale overflow-y-auto max-h-full">
+      <div class="text-center mb-3">
+        <div class="inline-block bg-brand-cyanPale text-brand-cyanDark font-extrabold text-xs tracking-widest uppercase px-3 py-1 rounded-full mb-1">
+          IDEATION WORKSHEET
+        </div>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-brand-purple">
+          Ideate Your Static App
+        </h2>
+        <p class="text-xs text-brand-greyDark font-medium">
+          Fill out your project specifications vertically below:
+        </p>
+      </div>
+
+      <div class="w-full space-y-3 text-xs md:text-sm">
+        <!-- 1. App Concept & Title -->
+        <div class="bg-brand-purpleGhost p-3.5 rounded-2xl border-2 border-brand-purpleMid">
+          <label for="ideateTitleInput" class="block font-bold text-brand-purple mb-1">1. App Concept & Title:</label>
+          <input type="text" id="ideateTitleInput" placeholder="e.g. AstroCraft - Space Explorers Club Portfolio" class="w-full p-2.5 rounded-xl border border-brand-purpleMid text-xs font-medium focus:outline-none bg-white">
+        </div>
+
+        <!-- 2. Target Audience & Theme -->
+        <div class="bg-brand-purpleGhost p-3.5 rounded-2xl border-2 border-brand-purpleMid">
+          <label for="ideateThemeInput" class="block font-bold text-brand-purple mb-1">2. Target Audience & Theme Colors:</label>
+          <input type="text" id="ideateThemeInput" placeholder="e.g. Designed for gamers; Dark neon purple (#5E48C4) and cyan (#59E4FB)..." class="w-full p-2.5 rounded-xl border border-brand-purpleMid text-xs font-medium focus:outline-none bg-white">
+        </div>
+
+        <!-- 3. Page Count -->
+        <div class="bg-brand-purpleGhost p-3.5 rounded-2xl border-2 border-brand-purpleMid">
+          <label for="ideatePageCountInput" class="block font-bold text-brand-purple mb-1">3. How many pages will your app have?</label>
+          <input type="text" id="ideatePageCountInput" placeholder="e.g. 3 pages (index.html, about.html, gallery.html)" class="w-full p-2.5 rounded-xl border border-brand-purpleMid text-xs font-medium focus:outline-none bg-white">
+        </div>
+
+        <!-- 4. Google Fonts Ideas Button & Font List -->
+        <div class="bg-brand-purpleGhost p-3.5 rounded-2xl border-2 border-brand-purpleMid">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-2">
+            <span class="font-bold text-brand-purple">4. Typography & Fonts:</span>
+            <button onclick="toggleFontIdeasModal()" class="bg-brand-purple hover:bg-brand-purpleDark text-white text-[11px] font-bold px-3 py-1.5 rounded-xl transition shadow">
+              Explore Google Fonts Ideas 🔤
+            </button>
+          </div>
+          <input type="text" id="ideateFontInput" placeholder="e.g. Poppins for headings + Inter for body text" class="w-full p-2.5 rounded-xl border border-brand-purpleMid text-xs font-medium focus:outline-none bg-white">
+          
+          <!-- Font Suggestions Container -->
+          <div id="fontIdeasBox" class="hidden mt-3 p-3 bg-white border border-brand-purpleMid rounded-xl text-xs space-y-2">
+            <h4 class="font-bold text-brand-purple">Popular Google Font Pairings:</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <button onclick="selectFontPair('Poppins + Inter')" class="p-2 bg-brand-purpleGhost border rounded-lg text-left hover:border-brand-purple">
+                <strong>Poppins</strong> + Inter<br/><span class="text-[10px] text-brand-greyMid">Modern & Clean</span>
+              </button>
+              <button onclick="selectFontPair('Montserrat + Lora')" class="p-2 bg-brand-purpleGhost border rounded-lg text-left hover:border-brand-purple">
+                <strong>Montserrat</strong> + Lora<br/><span class="text-[10px] text-brand-greyMid">Bold & Elegant</span>
+              </button>
+              <button onclick="selectFontPair('Playfair Display + Source Sans')" class="p-2 bg-brand-purpleGhost border rounded-lg text-left hover:border-brand-purple">
+                <strong>Playfair</strong> + Source Sans<br/><span class="text-[10px] text-brand-greyMid">Creative Editorial</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 9: Draft Prompt Structure for Day 2 -->
+    <section class="slide flex-col items-center max-w-5xl w-full bg-white rounded-3xl p-5 md:p-7 shadow-xl border-4 border-brand-purplePale overflow-y-auto max-h-full">
+      <div class="text-center mb-3">
+        <div class="inline-block bg-brand-yellow text-brand-black font-extrabold text-xs tracking-widest uppercase px-3 py-1 rounded-full mb-1">
+          PROMPT ENGINEERING
+        </div>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-brand-purple">
+          Draft Prompt Structure for Day 2 ✍️
+        </h2>
+        <p class="text-xs text-brand-greyDark font-medium">
+          Compose your prompt using the structured guidelines on the left:
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-4 w-full text-xs">
+        <!-- LEFT COLUMN: Required Guidelines & Live Detector -->
+        <div class="md:col-span-5 bg-brand-purpleGhost p-4 rounded-2xl border-2 border-brand-purpleMid flex flex-col justify-between">
+          <div>
+            <h3 class="font-extrabold text-brand-purple text-sm mb-2">Prompt Ingredients Checklist:</h3>
+            <ul class="space-y-2 font-medium">
+              <li id="chk-persona" class="p-2 rounded-xl bg-white border border-gray-300 transition text-gray-600">
+                👤 <strong>Role / Persona:</strong> e.g. "Act as a Senior Frontend Web Developer"
+              </li>
+              <li id="chk-tech" class="p-2 rounded-xl bg-white border border-gray-300 transition text-gray-600">
+                🌐 <strong>Target Language & Tech:</strong> HTML, CSS, JavaScript
+              </li>
+              <li id="chk-responsive" class="p-2 rounded-xl bg-white border border-gray-300 transition text-gray-600">
+                📱 <strong>Responsiveness:</strong> Mobile & Desktop adaptable
+              </li>
+              <li id="chk-pages" class="p-2 rounded-xl bg-white border border-gray-300 transition text-gray-600">
+                📂 <strong>Page breakdown:</strong> index.html, about.html
+              </li>
+              <li id="chk-css" class="p-2 rounded-xl bg-white border border-gray-300 transition text-gray-600">
+                🎨 <strong>CSS Styling Rules:</strong> Custom style.css colors & layout
+              </li>
+              <li id="chk-js" class="p-2 rounded-xl bg-white border border-gray-300 transition text-gray-600">
+                ⚡ <strong>JavaScript Interactivity:</strong> script.js modal or menu
+              </li>
+              <li id="chk-assets" class="p-2 rounded-xl bg-white border border-gray-300 transition text-gray-600">
+                🖼️ <strong>Assets & Placeholders:</strong> Image placeholders & logo
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: Prompt Textarea & Check Button -->
+        <div class="md:col-span-7 flex flex-col justify-between space-y-3">
+          <div class="bg-brand-purpleGhost p-4 rounded-2xl border-2 border-brand-purpleMid flex-1 flex flex-col">
+            <label for="day2PromptArea" class="block font-extrabold text-brand-purple uppercase mb-2">Write Your Day 2 Prompt Idea:</label>
+            <textarea id="day2PromptArea" oninput="liveCheckPrompt()" rows="8" placeholder="Act as a Senior Frontend Developer. Build a 2-page responsive static web app using HTML, CSS, and JavaScript. Include index.html for home and about.html for team bio. Style using custom style.css with dark purple theme, and add interactive script.js menu toggle. Use placehold.co images..." class="w-full p-3 rounded-xl border border-brand-purpleMid text-xs font-medium focus:outline-none bg-white text-brand-black resize-none flex-1"></textarea>
+          </div>
+
+          <button onclick="checkDay2PromptQuality()" class="w-full bg-brand-purple hover:bg-brand-purpleDark text-white font-bold py-3 rounded-xl shadow transition text-xs md:text-sm flex items-center justify-center gap-2">
+            <span>Check Prompt Quality ✨</span>
+          </button>
+
+          <!-- Feedback Result Box -->
+          <div id="day2PromptFeedback" class="hidden p-3 rounded-xl bg-white border-2 border-brand-purple text-xs"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 10: Wrap-up & Static App Knowledge Check -->
+    <section class="slide flex-col items-center max-w-4xl w-full bg-white rounded-3xl p-5 md:p-7 shadow-xl border-4 border-brand-purplePale overflow-y-auto max-h-full">
+      <div class="text-center mb-3">
+        <div class="inline-block bg-brand-yellow text-brand-black font-extrabold text-xs tracking-widest uppercase px-3 py-1 rounded-full mb-1">
+          WRAP-UP
+        </div>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-brand-purple">
+          Static App Knowledge Check 🏆
+        </h2>
+        <p class="text-xs text-brand-greyDark font-medium">
+          Answer all questions to complete Day 2:
+        </p>
+      </div>
+
+      <div class="w-full space-y-3 text-left mb-3 text-xs">
+        <!-- Q1 -->
+        <div class="bg-brand-purpleGhost p-3 rounded-2xl border-2 border-brand-purpleMid">
+          <p class="font-bold text-brand-black mb-2">1. What is a static app?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <button onclick="handleFinalQuiz(this, false)" class="fq-btn p-2.5 bg-white border border-brand-greyMid rounded-xl font-medium hover:border-brand-purple transition">
+              An app requiring dynamic live server data processing for every user.
+            </button>
+            <button onclick="handleFinalQuiz(this, true)" class="fq-btn p-2.5 bg-white border border-brand-greyMid rounded-xl font-medium hover:border-brand-purple transition">
+              A web app presenting fixed content that displays identically to all visitors.
+            </button>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="bg-brand-purpleGhost p-3 rounded-2xl border-2 border-brand-purpleMid">
+          <p class="font-bold text-brand-black mb-2">2. Why do we use image placeholders during static app prototyping?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <button onclick="handleFinalQuiz(this, true)" class="fq-btn p-2.5 bg-white border border-brand-greyMid rounded-xl font-medium hover:border-brand-purple transition">
+              To design wireframe layouts quickly without waiting for final graphics.
+            </button>
+            <button onclick="handleFinalQuiz(this, false)" class="fq-btn p-2.5 bg-white border border-brand-greyMid rounded-xl font-medium hover:border-brand-purple transition">
+              Because static apps are prohibited from displaying real pictures.
+            </button>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="bg-brand-purpleGhost p-3 rounded-2xl border-2 border-brand-purpleMid">
+          <p class="font-bold text-brand-black mb-2">3. Which file extension is used for styling rules and layout visual theme?</p>
+          <div class="grid grid-cols-4 gap-2 text-center font-bold">
+            <button onclick="handleFinalQuiz(this, false)" class="fq-btn p-2 bg-white border border-brand-greyMid rounded-xl hover:border-brand-purple transition">.html</button>
+            <button onclick="handleFinalQuiz(this, true)" class="fq-btn p-2 bg-white border border-brand-greyMid rounded-xl hover:border-brand-purple transition">.css</button>
+            <button onclick="handleFinalQuiz(this, false)" class="fq-btn p-2 bg-white border border-brand-greyMid rounded-xl hover:border-brand-purple transition">.js</button>
+            <button onclick="handleFinalQuiz(this, false)" class="fq-btn p-2 bg-white border border-brand-greyMid rounded-xl hover:border-brand-purple transition">.png</button>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="bg-brand-purpleGhost p-3 rounded-2xl border-2 border-brand-purpleMid">
+          <p class="font-bold text-brand-black mb-2">4. Which file extension is used for dynamic client-side interactivity?</p>
+          <div class="grid grid-cols-4 gap-2 text-center font-bold">
+            <button onclick="handleFinalQuiz(this, false)" class="fq-btn p-2 bg-white border border-brand-greyMid rounded-xl hover:border-brand-purple transition">.css</button>
+            <button onclick="handleFinalQuiz(this, false)" class="fq-btn p-2 bg-white border border-brand-greyMid rounded-xl hover:border-brand-purple transition">.html</button>
+            <button onclick="handleFinalQuiz(this, true)" class="fq-btn p-2 bg-white border border-brand-greyMid rounded-xl hover:border-brand-purple transition">.js</button>
+            <button onclick="handleFinalQuiz(this, false)" class="fq-btn p-2 bg-white border border-brand-greyMid rounded-xl hover:border-brand-purple transition">.py</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Victory Banner -->
+      <div id="victoryBanner" class="hidden w-full bg-brand-yellow p-3 rounded-2xl text-center shadow-lg border-2 border-brand-yellowDark animate-bounce-subtle">
+        <h3 class="text-lg md:text-xl font-extrabold text-brand-black mb-0.5">
+          🎉 Day 2 Complete!
+        </h3>
+       
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER NAVIGATION -->
+  <footer class="bg-white border-t-2 border-brand-purplePale px-6 py-3.5 flex justify-between items-center z-20 shadow-lg">
+    <button id="prevBtn" onclick="prevSlide()" class="bg-brand-purpleGhost hover:bg-brand-purplePale text-brand-purple font-extrabold px-5 py-2.5 rounded-2xl transition border-2 border-brand-purpleMid disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 text-sm md:text-base">
+      ⬅️ Previous
+    </button>
+
+    <div class="hidden md:flex items-center space-x-2" id="dotContainer"></div>
+
+    <button id="nextBtn" onclick="nextSlide()" class="bg-brand-yellow hover:bg-brand-yellowDark text-brand-black font-extrabold px-5 py-2.5 rounded-2xl transition shadow-md flex items-center gap-2 text-sm md:text-base">
+      Next ➡️
+    </button>
+  </footer>
+
+  <!-- AUDIO SYNTHESIZER & NAVIGATION LOGIC JS -->
+  <script>
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    let audioCtx = null;
+
+    function initAudio() {
+      if (!audioCtx) audioCtx = new AudioContext();
+    }
+
+    function playTone(freq, type = 'sine', duration = 0.15) {
+      initAudio();
+      if (!audioCtx) return;
+
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      osc.type = type;
+      osc.frequency.value = freq;
+
+      gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      osc.start();
+      osc.stop(audioCtx.currentTime + duration);
+    }
+
+    function playCorrectSound() {
+      playTone(523.25, 'triangle', 0.1);
+      setTimeout(() => playTone(659.25, 'triangle', 0.15), 100);
+      setTimeout(() => playTone(783.99, 'triangle', 0.2), 200);
+    }
+
+    function playWrongSound() {
+      playTone(220, 'sawtooth', 0.15);
+      setTimeout(() => playTone(180, 'sawtooth', 0.2), 120);
+    }
+
+    // Navigation State
+    let currentSlide = 1;
+    const totalSlides = 10;
+
+    function renderDots() {
+      const container = document.getElementById('dotContainer');
+      container.innerHTML = '';
+      for (let i = 1; i <= totalSlides; i++) {
+        const dot = document.createElement('div');
+        dot.className = `w-2.5 h-2.5 rounded-full cursor-pointer transition-all ${i === currentSlide ? 'bg-brand-purple w-5' : 'bg-brand-greyMid opacity-50'}`;
+        dot.onclick = () => goToSlide(i);
+        container.appendChild(dot);
+      }
+    }
+
+    function updateSlideDisplay() {
+      document.querySelectorAll('.slide').forEach((slide, idx) => {
+        if (idx + 1 === currentSlide) {
+          slide.classList.add('active');
+        } else {
+          slide.classList.remove('active');
+        }
+      });
+
+      document.getElementById('slideCounter').innerText = `${currentSlide} / ${totalSlides}`;
+      document.getElementById('slideSelect').value = currentSlide;
+
+      document.getElementById('prevBtn').disabled = (currentSlide === 1);
+      if (currentSlide === totalSlides) {
+        document.getElementById('nextBtn').innerText = 'Finish 🏆';
+      } else {
+        document.getElementById('nextBtn').innerText = 'Next ➡️';
+      }
+
+      renderDots();
+    }
+
+    function goToSlide(n) {
+      if (n >= 1 && n <= totalSlides) {
+        currentSlide = n;
+        updateSlideDisplay();
+      }
+    }
+
+    function nextSlide() {
+      if (currentSlide === totalSlides) {
+        triggerFinishCelebration();
+      } else if (currentSlide < totalSlides) {
+        currentSlide++;
+        updateSlideDisplay();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        currentSlide--;
+        updateSlideDisplay();
+      }
+    }
+
+    // Keydown Arrow Navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') nextSlide();
+      if (e.key === 'ArrowLeft') prevSlide();
+    });
+
+    // Slide 2 Quiz Handlers
+    function handleRecapAnswer(btn, isCorrect) {
+      if (isCorrect) {
+        playCorrectSound();
+        btn.classList.remove('bg-white', 'border-brand-greyMid');
+        btn.classList.add('bg-green-500', 'text-white', 'border-green-600', 'font-bold');
+      } else {
+        playWrongSound();
+        btn.classList.remove('bg-white', 'border-brand-greyMid');
+        btn.classList.add('bg-red-100', 'border-red-400', 'text-red-700');
+      }
+    }
+
+    // Slide 6 File Inspection Handler
+    function inspectFileRole(fileType) {
+      playTone(480, 'sine', 0.1);
+      const title = document.getElementById('fileRoleTitle');
+      const desc = document.getElementById('fileRoleDesc');
+
+      const data = {
+        index: {
+          title: "🏠 index.html (Main Entry Page)",
+          text: "The primary homepage layout of your web app. Contains structural markup, main hero banner, navigation bar, and links to secondary pages."
+        },
+        about: {
+          title: "📄 pages.html (Secondary Content Page)",
+          text: "An additional page linked within multi-page web apps.Example - Displays team bios, contact forms, or detailed background information while sharing the same navigation header."
+        },
+        css: {
+          title: "🎨 style.css (Global Visual Theme)",
+          text: "Houses stylesheet rules defining font families, color themes, spacing, padding, borders, and responsive grid layouts across all HTML pages."
+        },
+        js: {
+          title: "⚡ script.js (Interactive Logic)",
+          text: "Adds client-side dynamic behaviors such as mobile menu toggles, modal dialog popups, theme togglers, and form validations."
+        }
+      };
+
+      if (data[fileType]) {
+        title.innerHTML = data[fileType].title;
+        desc.innerText = data[fileType].text;
+      }
+    }
+
+    // Slide 8 Font Modal Toggle & Selection
+    function toggleFontIdeasModal() {
+      playTone(450, 'sine', 0.1);
+      const box = document.getElementById('fontIdeasBox');
+      box.classList.toggle('hidden');
+    }
+
+    function selectFontPair(pairName) {
+      playCorrectSound();
+      document.getElementById('ideateFontInput').value = pairName;
+      document.getElementById('fontIdeasBox').classList.add('hidden');
+    }
+
+    // Slide 9 Live Prompt Ingredient Detector
+    function liveCheckPrompt() {
+      const text = document.getElementById('day2PromptArea').value.toLowerCase();
+
+      const chkPersona = document.getElementById('chk-persona');
+      const chkTech = document.getElementById('chk-tech');
+      const chkResponsive = document.getElementById('chk-responsive');
+      const chkPages = document.getElementById('chk-pages');
+      const chkCss = document.getElementById('chk-css');
+      const chkJs = document.getElementById('chk-js');
+      const chkAssets = document.getElementById('chk-assets');
+
+      // Detection Logic
+      if (text.includes('act as') || text.includes('developer') || text.includes('expert') || text.includes('role')) {
+        chkPersona.className = 'p-2 rounded-xl bg-green-100 border border-green-400 text-green-900 font-bold';
+      } else {
+        chkPersona.className = 'p-2 rounded-xl bg-white border border-gray-300 text-gray-600 font-medium';
+      }
+
+      if (text.includes('html') || text.includes('css') || text.includes('javascript') || text.includes('js')) {
+        chkTech.className = 'p-2 rounded-xl bg-green-100 border border-green-400 text-green-900 font-bold';
+      } else {
+        chkTech.className = 'p-2 rounded-xl bg-white border border-gray-300 text-gray-600 font-medium';
+      }
+
+      if (text.includes('responsive') || text.includes('mobile') || text.includes('desktop') || text.includes('screen')) {
+        chkResponsive.className = 'p-2 rounded-xl bg-green-100 border border-green-400 text-green-900 font-bold';
+      } else {
+        chkResponsive.className = 'p-2 rounded-xl bg-white border border-gray-300 text-gray-600 font-medium';
+      }
+
+      if (text.includes('index.html') || text.includes('about.html') || text.includes('page') || text.includes('multi-page')) {
+        chkPages.className = 'p-2 rounded-xl bg-green-100 border border-green-400 text-green-900 font-bold';
+      } else {
+        chkPages.className = 'p-2 rounded-xl bg-white border border-gray-300 text-gray-600 font-medium';
+      }
+
+      if (text.includes('style.css') || text.includes('color') || text.includes('style') || text.includes('theme')) {
+        chkCss.className = 'p-2 rounded-xl bg-green-100 border border-green-400 text-green-900 font-bold';
+      } else {
+        chkCss.className = 'p-2 rounded-xl bg-white border border-gray-300 text-gray-600 font-medium';
+      }
+
+      if (text.includes('script.js') || text.includes('interactive') || text.includes('toggle') || text.includes('menu')) {
+        chkJs.className = 'p-2 rounded-xl bg-green-100 border border-green-400 text-green-900 font-bold';
+      } else {
+        chkJs.className = 'p-2 rounded-xl bg-white border border-gray-300 text-gray-600 font-medium';
+      }
+
+      if (text.includes('placeholder') || text.includes('image') || text.includes('logo') || text.includes('placehold')) {
+        chkAssets.className = 'p-2 rounded-xl bg-green-100 border border-green-400 text-green-900 font-bold';
+      } else {
+        chkAssets.className = 'p-2 rounded-xl bg-white border border-gray-300 text-gray-600 font-medium';
+      }
+    }
+
+    function checkDay2PromptQuality() {
+      const text = document.getElementById('day2PromptArea').value.trim();
+      const fb = document.getElementById('day2PromptFeedback');
+      fb.classList.remove('hidden');
+
+      if (text.length < 30) {
+        playWrongSound();
+        fb.innerHTML = `<span class="font-bold text-red-600">⚠️ Prompt is too short!</span> Please add details for role, tech stack, page breakdown, and styling rules.`;
+        return;
+      }
+
+      playCorrectSound();
+      fb.innerHTML = `
+        <div class="font-extrabold text-brand-purple mb-1">🎉 Prompt Quality Analysis Complete!</div>
+        <p class="text-brand-black font-medium leading-relaxed">
+          Your prompt contains <strong>${text.length} characters</strong>. Verify that all detected checklist items on the left are green before feeding this prompt to Gemini or ChatGPT!
+        </p>
+      `;
+    }
+
+    // Slide 10 Final Quiz Handler
+    function handleFinalQuiz(btn, isCorrect) {
+      if (isCorrect) {
+        playCorrectSound();
+        btn.classList.remove('bg-white', 'border-brand-greyMid');
+        btn.classList.add('bg-green-500', 'text-white', 'border-green-600', 'font-bold');
+      } else {
+        playWrongSound();
+        btn.classList.remove('bg-white', 'border-brand-greyMid');
+        btn.classList.add('bg-red-100', 'border-red-400', 'text-red-700');
+      }
+    }
+
+    function triggerFinishCelebration() {
+      playTone(523.25, 'triangle', 0.15);
+      setTimeout(() => playTone(659.25, 'triangle', 0.15), 150);
+      setTimeout(() => playTone(783.99, 'triangle', 0.15), 300);
+      setTimeout(() => playTone(1046.50, 'triangle', 0.4), 450);
+
+      const victory = document.getElementById('victoryBanner');
+      if (victory) victory.classList.remove('hidden');
+
+      confetti({ particleCount: 150, spread: 90, origin: { y: 0.6 } });
+    }
+
+    // Initial Render
+    updateSlideDisplay();
+  </script>
+</body>
+</html>
